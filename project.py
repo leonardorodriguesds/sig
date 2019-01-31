@@ -1,4 +1,6 @@
 import datetime
+import sqlite3
+from sqlite3 import Error
 from openpyxl import Workbook, load_workbook
 from openpyxl.chart import (
     PieChart,
@@ -382,15 +384,31 @@ class Patients():
             cell.font = Font(bold=True, name='Arial', color='FFFFFFFF')
         file_3.save(summaryName)
 
-# filename = input()
-wb = load_workbook('DadosSIG.xlsx')
-ws = wb.get_sheet_by_name('Hoja1')
-all_rows = []
-for row in ws:
-    current_row = []
-    for cell in row:
-        current_row.append(cell.value)
-    all_rows.append(current_row)
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+        
+if __name__ == "__main__":
+    print(
+        bcolors.BOLD + '|=======================================================|\n' + bcolors.ENDC +
+        bcolors.BOLD + bcolors.OKGREEN + '\tSIG - Sistema de Informações gerenciais.\n' + bcolors.ENDC +
+        bcolors.BOLD + '|=======================================================|\n'    
+    )    
+    # filename = input()
+    wb = load_workbook('DadosSIG.xlsx')
+    ws = wb.get_sheet_by_name('Hoja1')
+    all_rows = []
+    for row in ws:
+        current_row = []
+        for cell in row:
+            current_row.append(cell.value)
+        all_rows.append(current_row)
 
-patients = Patients(all_rows)
-patients.printTable('Pessoas.xlsx', 'Ficha.xlsx', 'Relatório.xlsx')
+    patients = Patients(all_rows)
+    patients.printTable('Pessoas.xlsx', 'Ficha.xlsx', 'Relatório.xlsx')
