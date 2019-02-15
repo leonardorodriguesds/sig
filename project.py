@@ -1,3 +1,4 @@
+import bdclasses
 import datetime
 import sqlite3
 from sqlite3 import Error
@@ -412,3 +413,44 @@ if __name__ == "__main__":
 
     patients = Patients(all_rows)
     patients.printTable('Pessoas.xlsx', 'Ficha.xlsx', 'Relatório.xlsx')
+
+    ### Criacao das tabelas e preenchimento do banco de dados ### 
+
+    TabelaPessoa = bdclasses.CreateTablePerson()
+    TabelaFicha = bdclasses.CreateTableRecord()
+    Executar = bdclasses.SQLCommand()
+
+    Executar.execute(TabelaPessoa.getCommand())
+    Executar.execute(TabelaFicha.getCommand())
+
+    wb = bdclasses.load_workbook('Pessoas.xlsx')
+    ws = wb.get_sheet_by_name('Sheet')
+    all_rows = []
+
+    for row in ws:
+        current_row = []
+        for cell in row:
+            current_row.append(cell.value)
+        all_rows.append(current_row)
+
+    Preencher_pessoa = bdclasses.FillPersonTable()
+    Executar.executemany(Preencher_pessoa.getCommand(), all_rows[1:])
+    
+    wb = bdclasses.load_workbook('Ficha.xlsx')
+    ws = wb.get_sheet_by_name('Sheet')
+    all_rows = []
+
+    for row in ws:
+        current_row = []
+        for cell in row:
+            current_row.append(cell.value)
+        all_rows.append(current_row)
+
+    Preencher_ficha = bdclasses.FillRecordTable()
+    Executar.executemany(Preencher_ficha.getCommand(), all_rows[1 : -2])
+
+    bdclasses.init()
+    
+    aux = 'Dados inseridos com sucesso'
+    print('\n' + bdclasses.Fore.GREEN + bdclasses.Back.RED + '{0:^80}'.format(aux) + bdclasses.Style.RESET_ALL + '\n')
+
