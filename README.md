@@ -1,6 +1,8 @@
 # Sistemas de Informação 2019/0
 ## Universidade de Brasília
 
+__Professor: Willian Arvey Molano Gabalán.__
+
 __Grupo:__
 
 - __Henrique Mendes de Freitas Mariano - 17/0012280;__
