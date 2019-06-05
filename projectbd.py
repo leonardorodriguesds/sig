@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     print(bdclasses.Fore.LIGHTRED_EX + "\nDigite o valor (M ou F no caso do filtro ser Sexo):\n" + bdclasses.Style.RESET_ALL)
 
-    value = str(input())
+    value = input()
     
     filter = bdclasses.Filter(table_person.getCommand(), table_record.getCommand(), type_filter, value)
 
